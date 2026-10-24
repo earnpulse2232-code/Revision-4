@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#f8fafc">
+    <title>Indian Polity - NTPC GK PYQ Test 04</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --bg-main: #f8fafc; --bg-card: #ffffff; --primary: #2563eb; --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff; --text-dark: #0f172a; --text-muted: #64748b; --border-color: #e2e8f0;
+            --green: #10b981; --green-light: #ecfdf5; --red: #ef4444; --red-light: #fef2f2;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08);
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-main); color: var(--text-dark); min-height: 100dvh; font-size: 15px; line-height: 1.5; overflow-x: hidden; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        .hidden { display: none !important; }
+        .start-screen { position: fixed; inset: 0; background: var(--bg-main); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
+        .start-card { width: 100%; max-width: 440px; background: var(--bg-card); border-radius: 24px; padding: 36px 28px; box-shadow: var(--shadow-lg); text-align: center; border: 1px solid var(--border-color); }
+        .brand-icon { width: 60px; height: 60px; background: var(--primary-light); color: var(--primary); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 16px; }
+        .start-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+        .start-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+        .mode-btn { display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px; background: #fff; border: 1.5px solid var(--border-color); border-radius: 16px; text-align: left; margin-bottom: 12px; transition: all 0.2s ease; }
+        .mode-btn:hover { border-color: var(--primary); background: var(--primary-light); transform: translateY(-2px); }
+        .mode-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .mode-icon.quiz { background: #dbeafe; color: #2563eb; }
+        .mode-icon.test { background: #d1fae5; color: #059669; }
+        .mode-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+        .mode-info-txt { font-size: 12px; color: var(--text-muted); }
+        .quiz-app { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+        .quiz-header { flex-shrink: 0; background: #fff; border-bottom: 1px solid var(--border-color); padding: 12px 18px; }
+        .quiz-header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .hdr-brand { font-weight: 700; font-size: 15px; }
+        .hdr-timer { padding: 6px 14px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 20px; font-family: monospace; font-weight: 700; color: var(--primary); }
+        .hdr-btn { width: 38px; height: 38px; border-radius: 10px; background: #fff; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; }
+        .quiz-main { flex: 1; overflow-y: auto; max-width: 900px; width: 100%; margin: 0 auto; padding: 24px 16px; }
+        .q-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-sm); }
+        .q-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .q-num-badge { padding: 5px 12px; background: var(--primary-light); color: var(--primary); border-radius: 20px; font-size: 12px; font-weight: 700; }
+        .lang-btn { padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border-color); font-size: 12px; font-weight: 600; background: #fff; display: inline-flex; align-items: center; gap: 6px; }
+        .q-text { font-size: 16px; font-weight: 600; line-height: 1.6; margin-bottom: 22px; white-space: pre-line; }
+        .opts { display: flex; flex-direction: column; gap: 11px; }
+        .opt { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: #fff; border: 1.5px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.15s ease; }
+        .opt:hover:not(.locked) { border-color: var(--primary); background: #f8fafc; }
+        .opt.selected { border-color: var(--primary); background: var(--primary-light); }
+        .opt.correct { border-color: var(--green); background: var(--green-light); }
+        .opt.wrong { border-color: var(--red); background: var(--red-light); }
+        .opt.locked { cursor: default; }
+        .opt-letter { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--text-muted); flex-shrink: 0; }
+        .opt.selected .opt-letter { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .opt.correct .opt-letter { background: var(--green); color: #fff; border-color: var(--green); }
+        .opt.wrong .opt-letter { background: var(--red); color: #fff; border-color: var(--red); }
+        .opt-text { flex: 1; font-weight: 600; }
+        .opt-tag { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+        .opt.correct .opt-tag { background: var(--green); color: #fff; }
+        .opt.wrong .opt-tag { background: var(--red); color: #fff; }
+        .sol-box { margin-top: 20px; padding: 16px; background: #f8fafc; border-left: 4px solid var(--primary); border-radius: 12px; }
+        .sol-head { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+        .quiz-nav { flex-shrink: 0; background: #fff; border-top: 1px solid var(--border-color); padding: 12px 18px; }
+        .quiz-nav-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .nav-btn { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; }
+        .nav-btn.prev { background: #fff; border: 1px solid var(--border-color); }
+        .nav-btn.prev:disabled { opacity: 0.4; cursor: not-allowed; }
+        .nav-btn.submit { background: var(--green-light); color: #065f46; border: 1px solid #a7f3d0; }
+        .nav-btn.next { background: var(--primary); color: #fff; }
+        .palette-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; display: none; }
+        .palette-overlay.open { display: block; }
+        .palette-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: min(340px, 85vw); background: #fff; z-index: 160; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.25s; }
+        .palette-drawer.open { transform: translateX(0); }
+        .pal-head { padding: 18px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; font-weight: 700; }
+        .pal-grid { flex: 1; overflow-y: auto; padding: 16px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-content: start; }
+        .pal-btn { aspect-ratio: 1; border-radius: 10px; border: 1px solid var(--border-color); background: #f8fafc; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+        .pal-btn.answered { background: var(--green); color: #fff; border-color: var(--green); }
+        .pal-btn.current { outline: 2px solid var(--primary); outline-offset: 2px; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 170; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.open { display: flex; }
+        .modal-box { width: 100%; max-width: 420px; background: #fff; border-radius: 20px; padding: 28px; text-align: center; }
+        .modal-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 22px; }
+        .modal-stat { background: #f8fafc; border-radius: 12px; padding: 14px; border: 1px solid var(--border-color); }
+        .modal-stat-num { font-size: 24px; font-weight: 800; }
+        .modal-btn { width: 100%; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+        .modal-btn.confirm { background: var(--primary); color: #fff; }
+        .modal-btn.cancel { background: #f1f5f9; }
+        .results-screen { position: fixed; inset: 0; background: var(--bg-main); z-index: 180; display: none; overflow-y: auto; padding: 30px 16px 60px; }
+        .results-screen.open { display: block; }
+        .results-box { max-width: 600px; margin: 0 auto; text-align: center; }
+        .res-score-card { background: #0f172a; color: #fff; border-radius: 20px; padding: 28px; margin: 20px 0; }
+        .res-score-val { font-size: 54px; font-weight: 800; }
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .res-item { background: #fff; border-radius: 14px; padding: 16px; border: 1px solid var(--border-color); }
+        .res-item-val { font-size: 22px; font-weight: 700; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 300; opacity: 0; transition: all 0.25s; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="start-screen" id="startScreen">
+        <div class="start-card">
+            <div class="brand-icon"><i class="fas fa-landmark"></i></div>
+            <h1 class="start-title">NTPC GK PYQ Test 04</h1>
+            <p class="start-desc">Indian Polity - State Legislature, Parliament Committees & Constitutional Amendments</p>
+            <button class="mode-btn" onclick="startApp('quiz')">
+                <div class="mode-icon quiz"><i class="fas fa-bolt"></i></div>
+                <div><div class="mode-name">Practice Mode</div><div class="mode-info-txt">Instant correct/wrong answers and detailed explanations.</div></div>
+            </button>
+            <button class="mode-btn" onclick="startApp('test')">
+                <div class="mode-icon test"><i class="fas fa-clock"></i></div>
+                <div><div class="mode-name">Exam Mode</div><div class="mode-info-txt">Timed mock test with review and final scorecard.</div></div>
+            </button>
+        </div>
+    </div>
+
+    <div class="quiz-app hidden" id="quizApp">
+        <header class="quiz-header">
+            <div class="quiz-header-inner">
+                <button class="hdr-btn" onclick="openPalette()"><i class="fas fa-th-large"></i></button>
+                <div class="hdr-brand">NTPC GK PYQ Test 04</div>
+                <div class="hdr-timer"><i class="fas fa-stopwatch"></i> <span id="timerText">00:00</span></div>
+            </div>
+        </header>
+
+        <main class="quiz-main" id="quizMain"></main>
+
+        <nav class="quiz-nav" id="quizNav">
+            <div class="quiz-nav-inner">
+                <button class="nav-btn prev" id="prevBtn" onclick="prevQuestion()"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn submit" onclick="openSubmitModal()"><i class="fas fa-paper-plane"></i> Submit</button>
+                <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()"><span id="nextLabel">Next</span> <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </nav>
+    </div>
+
+    <div class="palette-overlay" id="paletteOverlay" onclick="closePalette()"></div>
+    <aside class="palette-drawer" id="paletteDrawer">
+        <div class="pal-head"><span>Questions</span><button onclick="closePalette()"><i class="fas fa-times"></i></button></div>
+        <div class="pal-grid" id="paletteGrid"></div>
+    </aside>
+
+    <div class="modal-overlay" id="submitModal">
+        <div class="modal-box">
+            <h3>Submit Test?</h3>
+            <div class="modal-stats-grid">
+                <div class="modal-stat"><div class="modal-stat-num" id="modalAttempted" style="color:var(--green)">0</div><div>Attempted</div></div>
+                <div class="modal-stat"><div class="modal-stat-num" id="modalUnattempted" style="color:var(--text-muted)">0</div><div>Unattempted</div></div>
+            </div>
+            <button class="modal-btn confirm" onclick="confirmSubmit()">Yes, Finish</button>
+            <button class="modal-btn cancel" onclick="closeSubmitModal()">Resume</button>
+        </div>
+    </div>
+
+    <div class="results-screen" id="resultsScreen"><div class="results-box" id="resultsInner"></div></div>
+    <div class="toast" id="toast"><span id="toastText"></span></div>
+
+    <script>
+        const QUESTIONS = [
+            {
+                e: "The governor can dissolve Vidhan Sabha before the completion of its term on the advice of the _______.",
+                h: "राज्यपाल किसकी सलाह पर विधानसभा को उसका कार्यकाल पूरा होने से पहले भंग कर सकते हैं?",
+                oEn: ["High Court of the State", "Election Commission", "Chief Minister", "President"],
+                oHi: ["राज्य के उच्च न्यायालय", "चुनाव आयोग", "मुख्यमंत्री", "राष्ट्रपति"],
+                a: 2,
+                sE: "Under Article 174(2)(b), the Governor has the power to dissolve the Legislative Assembly on the aid and advice of the Chief Minister/Council of Ministers.",
+                sH: "अनुच्छेद 174(2)(b) के तहत राज्यपाल मुख्यमंत्री (मंत्रिपरिषद) की सलाह पर विधानसभा को कार्यकाल पूरा होने से पहले भी भंग कर सकते हैं।"
+            },
+            {
+                e: "The Vidhan Sabha is also known as the:",
+                h: "विधानसभा को किस रूप में भी जाना जाता है?",
+                oEn: ["Legislative Assembly", "Legislative Council", "State Parliament", "Council of Ministers"],
+                oHi: ["विधान सभा (Legislative Assembly)", "विधान परिषद", "राज्य संसद", "मंत्रिपरिषद"],
+                a: 0,
+                sE: "Vidhan Sabha is the Hindi term for the Legislative Assembly, the lower house of the State Legislature.",
+                sH: "विधानसभा को राज्य विधायिका के निचले सदन (Legislative Assembly) के रूप में जाना जाता है।"
+            },
+            {
+                e: "The Committee on Government Assurances primarily deals with ______ .",
+                h: "सरकारी आश्वासनों संबंधी समिति (Committee on Government Assurances) मुख्य रूप से किससे संबंधित है?",
+                oEn: [
+                    "Promises and undertakings made by Ministers in Parliament",
+                    "Monitoring of government expenditure in Parliament",
+                    "Examining Rules under Article 312",
+                    "Policy review of public enterprises"
+                ],
+                oHi: [
+                    "संसद में मंत्रियों द्वारा किए गए वादों और आश्वासनों की जांच से",
+                    "संसद में सरकारी खर्च की निगरानी से",
+                    "अनुच्छेद 312 के तहत नियमों की जांच से",
+                    "सार्वजनिक उपक्रमों की नीतिगत समीक्षा से"
+                ],
+                a: 0,
+                sE: "The Committee on Government Assurances scrutinizes the assurances, promises, and undertakings given by ministers from time to time on the floor of the House.",
+                sH: "यह समिति सदन में मंत्रियों द्वारा समय-समय पर दिए गए आश्वासनों, वचनों और वादों के क्रियान्वयन की जांच करती है।"
+            },
+            {
+                e: "Which of the following Schedules was added to the Constitution of India, to provide for the disqualification of members on grounds of defection?",
+                h: "दलबदल के आधार पर संसद और राज्य विधानसभाओं के सदस्यों को अयोग्य ठहराने के लिए संविधान में कौन-सी अनुसूची जोड़ी गई थी?",
+                oEn: ["Schedule XI", "Schedule XII", "Schedule IX", "Schedule X"],
+                oHi: ["अनुसूची XI", "अनुसूची XII", "अनुसूची IX", "अनुसूची X"],
+                a: 3,
+                sE: "The Tenth Schedule (Anti-Defection Law) was added to the Constitution by the 52nd Constitutional Amendment Act, 1985.",
+                sH: "52वें संविधान संशोधन अधिनियम 1985 द्वारा 10वीं अनुसूची को दलबदल विरोधी कानून के रूप में जोड़ा गया था।"
+            },
+            {
+                e: "Which of the following is a Parliamentary committee?",
+                h: "निम्नलिखित में से कौन-सी एक संसदीय समिति है?",
+                oEn: [
+                    "A committee formed by the President",
+                    "A judicial panel of judges",
+                    "A panel of civil servants",
+                    "A panel of MPs selected by the House or Speaker"
+                ],
+                oHi: [
+                    "राष्ट्रपति द्वारा गठित एक समिति",
+                    "न्यायाधीशों का एक न्यायिक पैनल",
+                    "सिविल सेवकों का एक पैनल",
+                    "सदन या अध्यक्ष द्वारा नियुक्त/निर्वाचित सांसदों का एक पैनल"
+                ],
+                a: 3,
+                sE: "A Parliamentary committee is a committee appointed or elected by the House or nominated by the Speaker/Chairman, consisting of Members of Parliament.",
+                sH: "संसदीय समिति वह समिति है जो सदन द्वारा नियुक्त/निर्वाचित होती है अथवा अध्यक्ष/सभापति द्वारा नामित सांसदों से मिलकर बनती है।"
+            },
+            {
+                e: "Under which article can the President summon, prorogue, or dissolve either house of Parliament?",
+                h: "किस अनुच्छेद के तहत राष्ट्रपति संसद के सदनों को आहूत, सत्रावसान या लोकसभा को विघटित कर सकते हैं?",
+                oEn: ["Article 87", "Article 79", "Article 108", "Article 85"],
+                oHi: ["अनुच्छेद 87", "अनुच्छेद 79", "अनुच्छेद 108", "अनुच्छेद 85"],
+                a: 3,
+                sE: "Article 85 empowers the President to summon and prorogue each House of Parliament and to dissolve the Lok Sabha.",
+                sH: "अनुच्छेद 85 राष्ट्रपति को संसद के सदनों को बुलाने, सत्रावसान करने और लोकसभा को भंग करने की शक्ति प्रदान करता है।"
+            },
+            {
+                e: "How does the Vidhan Parishad (State Legislative Council) elect its Chairman?",
+                h: "विधान परिषद (Vidhan Parishad) अपने सभापति का चुनाव कैसे करती है?",
+                oEn: [
+                    "Appointed by the President",
+                    "Elected by members of the Vidhan Parishad",
+                    "Elected by members of the Lok Sabha",
+                    "Nominated by the Governor"
+                ],
+                oHi: [
+                    "राष्ट्रपति द्वारा नियुक्त",
+                    "विधान परिषद के सदस्यों द्वारा अपने में से निर्वाचित",
+                    "लोकसभा के सदस्यों द्वारा निर्वाचित",
+                    "राज्यपाल द्वारा नामित"
+                ],
+                a: 1,
+                sE: "Under Article 182, the Legislative Council chooses two members of the Council to be Chairman and Deputy Chairman thereof.",
+                sH: "अनुच्छेद 182 के अनुसार विधान परिषद के सदस्य अपने में से ही सभापति और उपसभापति का चुनाव करते हैं।"
+            },
+            {
+                e: "In which of the following ways is the Speaker of the Vidhan Sabha elected?",
+                h: "विधानसभा के अध्यक्ष (Speaker) का चुनाव किस प्रकार होता है?",
+                oEn: [
+                    "By the Governor",
+                    "Directly by the public",
+                    "By the Chief Minister",
+                    "By the members of the Vidhan Sabha"
+                ],
+                oHi: [
+                    "राज्यपाल द्वारा",
+                    "सीधे जनता द्वारा",
+                    "मुख्यमंत्री द्वारा",
+                    "विधानसभा के सदस्यों द्वारा अपने में से"
+                ],
+                a: 3,
+                sE: "Under Article 178, every Legislative Assembly of a State chooses two members of the Assembly to be Speaker and Deputy Speaker thereof.",
+                sH: "अनुच्छेद 178 के तहत विधानसभा के सदस्य अपने सदस्यों में से ही एक अध्यक्ष और एक उपाध्यक्ष का चुनाव करते हैं।"
+            },
+            {
+                e: "Which Article states that the quorum to constitute a meeting of either House of Parliament shall be one-tenth of the total number of members?",
+                h: "कौन सा अनुच्छेद यह निर्धारित करता है कि संसद के किसी भी सदन की बैठक के लिए गणपूर्ति (कोरम) कुल सदस्यों का 1/10 भाग होगी?",
+                oEn: ["Article 100", "Article 96", "Article 99", "Article 102"],
+                oHi: ["अनुच्छेद 100", "अनुच्छेद 96", "अनुच्छेद 99", "अनुच्छेद 102"],
+                a: 0,
+                sE: "Article 100(3) lays down that the quorum to constitute a sitting of either House of Parliament is one-tenth of the total number of members.",
+                sH: "अनुच्छेद 100(3) के अनुसार संसद के किसी भी सदन की बैठक की गणपूर्ति (कोरम) सदन की कुल सदस्य संख्या का दसवां हिस्सा (1/10) होगी।"
+            },
+            {
+                e: "Who administers the oath to the Pro Tem Speaker during the initial sitting of a newly elected Lok Sabha?",
+                h: "नवनिर्वाचित लोकसभा के पहले सत्र में प्रोटेम स्पीकर को शपथ कौन दिलाता है?",
+                oEn: ["President of India", "Cabinet Secretary", "Vice President of India", "Chief Justice of India"],
+                oHi: ["भारत के राष्ट्रपति", "कैबिनेट सचिव", "भारत के उपराष्ट्रपति", "भारत के मुख्य न्यायाधीश"],
+                a: 0,
+                sE: "The President of India administers the oath of office to the Pro Tem Speaker, who then oversees the oath-taking of all newly elected MPs.",
+                sH: "राष्ट्रपति प्रोटेम स्पीकर (अस्थायी अध्यक्ष) को शपथ दिलाते हैं, जो बाद में नए सांसदों को शपथ दिलाते हैं।"
+            },
+            {
+                e: "How many Departmentally Related Standing Committees (DRSCs) are there in the Indian Parliament?",
+                h: "भारतीय संसद में कुल कितनी विभाग-संबंधी स्थायी समितियां (DRSCs) हैं?",
+                oEn: ["15", "24", "31", "21"],
+                oHi: ["15", "24", "31", "21"],
+                a: 1,
+                sE: "There are currently 24 Departmentally Related Standing Committees (16 working under Lok Sabha and 8 working under Rajya Sabha).",
+                sH: "वर्तमान में संसद में कुल 24 विभाग-संबंधी स्थायी समितियां हैं (16 लोकसभा के अधीन और 8 राज्यसभा के अधीन)।"
+            },
+            {
+                e: "Parliament, the legislative organ of the Union government, is mentioned in which part of the Constitution of India?",
+                h: "संघ सरकार का विधायी अंग, संसद, संविधान के किस भाग में वर्णित है?",
+                oEn: ["Part VIII", "Part VII", "Part V", "Part VI"],
+                oHi: ["भाग VIII", "भाग VII", "भाग V", "भाग VI"],
+                a: 2,
+                sE: "Parliament is dealt with under Chapter II of Part V of the Constitution of India (Articles 79 to 122).",
+                sH: "भारतीय संविधान के भाग V (अध्याय II, अनुच्छेद 79 से 122) में संसद का वर्णन किया गया है।"
+            },
+            {
+                e: "A Joint Sitting of both Houses of the Parliament is summoned by:",
+                h: "संसद के दोनों सदनों की संयुक्त बैठक किसके द्वारा आहूत (बुलाई) की जाती है?",
+                oEn: ["Speaker of Lok Sabha", "Prime Minister of India", "Chairman of Rajya Sabha", "President of India"],
+                oHi: ["लोकसभा अध्यक्ष द्वारा", "भारत के प्रधानमंत्री द्वारा", "राज्यसभा के सभापति द्वारा", "भारत के राष्ट्रपति द्वारा"],
+                a: 3,
+                sE: "Under Article 108, the President of India summons a joint sitting of both Houses of Parliament to resolve a legislative deadlock.",
+                sH: "अनुच्छेद 108 के अनुसार दोनों सदनों के बीच गतिरोध की स्थिति में संयुक्त बैठक राष्ट्रपति द्वारा बुलाई जाती है।"
+            },
+            {
+                e: "What modification was made to Article 171(1) of the Indian Constitution regarding Legislative Councils by the 7th Amendment (1956)?",
+                h: "7वें संविधान संशोधन (1956) द्वारा विधान परिषद से संबंधित अनुच्छेद 171(1) में क्या संशोधन किया गया था?",
+                oEn: [
+                    "Term \"one-fourth\" was replaced with \"one-half\"",
+                    "Term \"one-third\" was replaced with \"one-fourth\"",
+                    "Term \"one-fourth\" was replaced with \"one-third\"",
+                    "Term \"one-half\" was replaced with \"one-fourth\""
+                ],
+                oHi: [
+                    "शब्द \"एक-चौथाई\" को \"एक-आधा\" से बदल दिया गया",
+                    "शब्द \"एक-तिहाई\" को \"एक-चौथाई\" से बदल दिया गया",
+                    "शब्द \"एक-चौथाई\" को बढ़ाकर \"एक-तिहाई\" कर दिया गया",
+                    "शब्द \"एक-आधा\" को \"एक-चौथाई\" से बदल दिया गया"
+                ],
+                a: 2,
+                sE: "The 7th Constitutional Amendment Act of 1956 increased the maximum strength of a Legislative Council from one-fourth to one-third of the Legislative Assembly's total strength.",
+                sH: "7वें संशोधन 1956 द्वारा विधान परिषद की अधिकतम सदस्य संख्या को विधानसभा की कुल सदस्य संख्या के एक-चौथाई से बढ़ाकर एक-तिहाई (1/3) कर दिया गया था।"
+            },
+            {
+                e: "What is the primary purpose of a Parliamentary Committee in India?",
+                h: "भारत में संसदीय समिति का प्राथमिक उद्देश्य क्या है?",
+                oEn: [
+                    "To examine bills, budgets, and policies in detail",
+                    "To supervise elections across the country",
+                    "To appoint ministers to executive offices",
+                    "To amend provisions of the Constitution independently"
+                ],
+                oHi: [
+                    "विधेयकों, बजट और नीतियों की गहन जांच करना",
+                    "देश भर में चुनावों की निगरानी करना",
+                    "कार्यकारी पदों पर मंत्रियों की नियुक्ति करना",
+                    "स्वतंत्र रूप से संविधान के प्रावधानों में संशोधन करना"
+                ],
+                a: 0,
+                sE: "Parliamentary Committees provide detailed, in-depth scrutiny of complex legislative bills, financial accounts, and departmental policies that the full House lacks time to inspect.",
+                sH: "संसदीय समितियां विधेयकों, बजटीय मांगों और सरकारी नीतियों की विस्तृत एवं सूक्ष्म जांच करती हैं।"
+            },
+            {
+                e: "What is the term of an elected MLA in Indian State Legislatures, unless dissolved prematurely?",
+                h: "असामयिक विघटन न होने पर राज्य विधानसभा के निर्वाचित सदस्य (MLA) का कार्यकाल कितना होता है?",
+                oEn: ["5 years", "4 years", "6 years", "3 years"],
+                oHi: ["5 वर्ष", "4 वर्ष", "6 वर्ष", "3 वर्ष"],
+                a: 0,
+                sE: "Under Article 172(1), the normal term of a State Legislative Assembly is five years from the date appointed for its first meeting.",
+                sH: "अनुच्छेद 172(1) के अनुसार विधानसभा का सामान्य कार्यकाल उसकी पहली बैठक की तारीख से 5 वर्ष होता है।"
+            },
+            {
+                e: "What is the highest forum for discussion and debate on public issues and national policy in India?",
+                h: "भारत में सार्वजनिक मुद्दों और राष्ट्रीय नीति पर चर्चा एवं बहस का सर्वोच्च मंच कौन सा है?",
+                oEn: ["Supreme Court", "Parliament", "President's Office", "Election Commission"],
+                oHi: ["उच्चतम न्यायालय", "संसद (Parliament)", "राष्ट्रपति कार्यालय", "निर्वाचन आयोग"],
+                a: 1,
+                sE: "The Parliament of India is the supreme legislative and deliberative body of the country where public issues are debated.",
+                sH: "संसद भारत में राष्ट्रीय नीतियों और जनहित के मुद्दों पर विचार-विमर्श का सर्वोच्च लोकतांत्रिक मंच है।"
+            },
+            {
+                e: "Which Constitutional Amendment Act aims to reserve one-third of seats for women in the Lok Sabha and State Assemblies?",
+                h: "कौन सा संविधान संशोधन अधिनियम लोकसभा और राज्य विधानसभाओं में महिलाओं के लिए एक-तिहाई सीटें आरक्षित करने का प्रावधान करता है?",
+                oEn: ["106th Amendment", "105th Amendment", "103rd Amendment", "104th Amendment"],
+                oHi: ["106वां संशोधन (Nari Shakti Vandan Adhiniyam)", "105वां संशोधन", "103वां संशोधन", "104वां संशोधन"],
+                a: 0,
+                sE: "The Constitution (106th Amendment) Act, 2023 (Nari Shakti Vandan Adhiniyam) provides 33% reservation for women in the Lok Sabha, State Legislative Assemblies, and NCT of Delhi.",
+                sH: "106वें संविधान संशोधन अधिनियम 2023 (नारी शक्ति वंदन अधिनियम) द्वारा लोकसभा और विधानसभाओं में महिलाओं के लिए 33% सीटें आरक्षित करने का प्रावधान किया गया।"
+            },
+            {
+                e: "The members of the Railway Convention Committee are nominated by which authority of India?",
+                h: "रेलवे कन्वेंशन कमेटी के सदस्यों को भारत के किस प्राधिकारी द्वारा मनोनीत किया जाता है?",
+                oEn: [
+                    "The Speaker of the Lok Sabha and Chairman of Rajya Sabha",
+                    "The Chairman of the Rajya Sabha alone",
+                    "The President of India",
+                    "The Prime Minister of India"
+                ],
+                oHi: [
+                    "लोकसभा अध्यक्ष (The Speaker of the Lok Sabha)",
+                    "केवल राज्यसभा के सभापति",
+                    "भारत के राष्ट्रपति",
+                    "भारत के प्रधानमंत्री"
+                ],
+                a: 0,
+                sE: "Members of the Railway Convention Committee (an ad-hoc committee of Parliament) are nominated by the Speaker of Lok Sabha and Chairman of Rajya Sabha.",
+                sH: "रेलवे कन्वेंशन कमेटी के सदस्यों को लोकसभा अध्यक्ष और राज्यसभा के सभापति द्वारा मनोनीत किया जाता है।"
+            },
+            {
+                e: "Which of the following Union Territories currently has a Legislative Assembly?",
+                h: "निम्नलिखित में से किस केंद्र शासित प्रदेश में विधान सभा है?",
+                oEn: ["Lakshadweep", "Ladakh", "National Capital Territory of Delhi", "Andaman and Nicobar Islands"],
+                oHi: ["लक्षद्वीप", "लद्दाख", "राष्ट्रीय राजधानी क्षेत्र दिल्ली (NCT of Delhi)", "अंडमान और निकोबार द्वीप समूह"],
+                a: 2,
+                sE: "Under Article 239AA, the National Capital Territory of Delhi has a Legislative Assembly and Council of Ministers (along with Puducherry and Jammu & Kashmir).",
+                sH: "अनुच्छेद 239AA के तहत राष्ट्रीय राजधानी क्षेत्र दिल्ली में एक निर्वाचित विधान सभा और मंत्रिपरिषद का प्रावधान है।"
+            },
+            {
+                e: "Which type(s) of Legislatures can an Indian State have under the Constitution?",
+                h: "भारतीय संविधान के अनुसार किसी राज्य में किस प्रकार की विधायिका हो सकती है?",
+                oEn: [
+                    "Either a single-house (unicameral) or two-house (bicameral) system",
+                    "Only single-house systems",
+                    "Only two-house systems",
+                    "Only the Parliament can decide on a day-to-day basis"
+                ],
+                oHi: [
+                    "या तो एक सदनीय (Unicameral) या द्विसदनीय (Bicameral) प्रणाली",
+                    "केवल एक सदनीय प्रणाली",
+                    "केवल द्विसदनीय प्रणाली",
+                    "संसद द्वारा दैनिक आधार पर निर्णय"
+                ],
+                a: 0,
+                sE: "Under Article 168, a state legislature may be unicameral (Legislative Assembly only) or bicameral (Legislative Assembly and Legislative Council).",
+                sH: "अनुच्छेद 168 के तहत राज्य में या तो एक सदन (केवल विधानसभा) या दो सदन (विधानसभा और विधान परिषद) हो सकते हैं।"
+            },
+            {
+                e: "In accordance with Article 84, what is the minimum age to qualify for membership of the House of the People (Lok Sabha)?",
+                h: "अनुच्छेद 84 के अनुसार लोकसभा का सदस्य बनने के लिए न्यूनतम आयु कितनी होनी चाहिए?",
+                oEn: ["Thirty years", "Eighteen years", "Twenty-one years", "Twenty-five years"],
+                oHi: ["तीस वर्ष", "अठारह वर्ष", "इक्कीस वर्ष", "पच्चीस वर्ष (25 years)"],
+                a: 3,
+                sE: "Article 84(b) prescribes a minimum age of 25 years for the House of the People (Lok Sabha) and 30 years for the Council of States (Rajya Sabha).",
+                sH: "अनुच्छेद 84(b) के तहत लोकसभा सदस्यता के लिए न्यूनतम आयु 25 वर्ष तय की गई है।"
+            },
+            {
+                e: "Article 182 of the Constitution of India deals with which of the following offices?",
+                h: "संविधान का अनुच्छेद 182 निम्नलिखित में से किस पद से संबंधित है?",
+                oEn: [
+                    "Composition of State Legislative Assemblies",
+                    "Disqualification for membership",
+                    "Special address by the Governor",
+                    "Chairman and Deputy Chairman of the State Legislative Council"
+                ],
+                oHi: [
+                    "राज्य विधानसभाओं की संरचना",
+                    "सदस्यता के लिए अयोग्यताएं",
+                    "राज्यपाल द्वारा विशेष अभिभाषण",
+                    "राज्य विधान परिषद के सभापति और उपसभापति"
+                ],
+                a: 3,
+                sE: "Article 182 provides for the Chairman and Deputy Chairman of the Legislative Council of a State.",
+                sH: "अनुच्छेद 182 राज्य विधान परिषद के सभापति और उपसभापति के पद और उनके चुनाव से संबंधित है।"
+            },
+            {
+                e: "As per Article 80, how many members are nominated by the President to the Council of States (Rajya Sabha)?",
+                h: "अनुच्छेद 80 के अनुसार राष्ट्रपति द्वारा राज्य सभा में कितने सदस्य मनोनीत किए जाते हैं?",
+                oEn: ["Twenty", "Twelve", "Ten", "Fourteen"],
+                oHi: ["बीस", "बारह (12 members)", "दस", "चौदह"],
+                a: 1,
+                sE: "Article 80(1)(a) provides that 12 members are nominated by the President to the Rajya Sabha from the fields of literature, science, art, and social service.",
+                sH: "अनुच्छेद 80(1)(a) के अनुसार राष्ट्रपति साहित्य, विज्ञान, कला और समाज सेवा से 12 सदस्यों को राज्यसभा में मनोनीत करते हैं।"
+            },
+            {
+                e: "Under which circumstance does the Parliament NOT get power to make laws on the State List?\n1. Rajya Sabha resolution\n2. National Emergency\n3. Request of 2 or more States\n4. International treaties\n5. At the sole discretion of the Prime Minister",
+                h: "संसद को राज्य सूची पर कानून बनाने का अधिकार किन परिस्थितियों में प्राप्त होता है?\n1. राज्यसभा का प्रस्ताव (Art. 249)\n2. राष्ट्रीय आपातकाल (Art. 250)\n3. राज्यों का अनुरोध (Art. 252)\n4. अंतर्राष्ट्रीय समझौते (Art. 253)\n5. प्रधानमंत्री के विवेकाधिकार पर",
+                oEn: ["2, 3, 4, and 5 only", "1, 2, 4, and 5 only", "1, 2, 3, and 5 only", "1, 2, 3, and 4 only"],
+                oHi: ["केवल 2, 3, 4 और 5", "केवल 1, 2, 4 और 5", "केवल 1, 2, 3 और 5", "केवल 1, 2, 3 और 4"],
+                a: 3,
+                sE: "Parliament can legislate on State List under Articles 249, 250, 252, and 253. There is no constitutional provision allowing this at the sole discretion of the Prime Minister.",
+                sH: "संसद केवल 1, 2, 3 और 4 की परिस्थितियों में राज्य सूची पर कानून बना सकती है; प्रधानमंत्री के व्यक्तिगत विवेकाधिकार पर ऐसा कोई प्रावधान नहीं है।"
+            },
+            {
+                e: "Which of these Union Territories has a Legislative Assembly and Council of Ministers?",
+                h: "निम्नलिखित में से किस केंद्र शासित प्रदेश में विधान सभा और मंत्रिपरिषद है?",
+                oEn: ["Dadra and Nagar Haveli", "Puducherry", "Daman and Diu", "Andaman and Nicobar Islands"],
+                oHi: ["दादरा और नगर हवेली", "पुडुचेरी (Puducherry)", "दमन और दीव", "अंडमान और निकोबार द्वीप समूह"],
+                a: 1,
+                sE: "Under Article 239A, Parliament created a Legislative Assembly and Council of Ministers for the Union Territory of Puducherry.",
+                sH: "अनुच्छेद 239A के तहत पुडुचेरी केंद्र शासित प्रदेश के लिए विधान सभा और मंत्रिपरिषद का गठन किया गया है।"
+            },
+            {
+                e: "Which authority is empowered under Article 105 to define the powers, privileges, and immunities of Parliament and its members?",
+                h: "अनुच्छेद 105 के तहत संसद, उसके सदस्यों और समितियों के विशेषाधिकारों और शक्तियों को परिभाषित करने का अधिकार किसके पास है?",
+                oEn: ["Supreme Court", "Speaker of the Lok Sabha", "Parliament itself by law", "President of India"],
+                oHi: ["सर्वोच्च न्यायालय", "लोकसभा अध्यक्ष", "संसद स्वयं (कानून बनाकर)", "भारत के राष्ट्रपति"],
+                a: 2,
+                sE: "Article 105(3) states that the powers, privileges, and immunities of each House of Parliament shall be such as may from time to time be defined by Parliament by law.",
+                sH: "अनुच्छेद 105(3) के अनुसार संसद को अपने सदस्यों और समितियों के विशेषाधिकार कानून बनाकर निर्धारित करने की शक्ति प्राप्त है।"
+            },
+            {
+                e: "Which of the following statements regarding state financial legislative power is INCORRECT?",
+                h: "राज्यों की वित्तीय विधायी शक्तियों के संबंध में निम्नलिखित में से कौन-सा कथन गलत है?",
+                oEn: [
+                    "Article 282 empowers Centre and states to make grants for public purposes.",
+                    "A state legislature can not impose tax on the consumption or sale of electricity.",
+                    "A state legislature is prohibited from taxing inter-state or foreign trade.",
+                    "A state legislature can impose taxes on professions and trades under Article 276."
+                ],
+                oHi: [
+                    "अनुच्छेद 282 केंद्र और राज्यों को सार्वजनिक उद्देश्यों के लिए अनुदान देने का अधिकार देता है।",
+                    "राज्य विधायिका बिजली की खपत या बिक्री पर कर नहीं लगा सकती (यह कथन गलत है)।",
+                    "राज्य विधायिका को राज्य के बाहर या आयात-निर्यात में माल की आपूर्ति पर कर लगाने की मनाही है।",
+                    "राज्य विधायिका व्यवसायों, व्यापारों और रोजगार पर कर लगा सकती है।"
+                ],
+                a: 1,
+                sE: "State legislatures CAN impose taxes on the consumption or sale of electricity under Entry 53 of the State List (except on electricity consumed by the Government of India or railways).",
+                sH: "राज्य सूची की प्रविष्टि 53 के तहत राज्य बिजली की खपत और बिक्री पर कर लगा सकते हैं; अतः कथन 2 गलत है।"
+            },
+            {
+                e: "Special address delivered by the President to both Houses of Parliament at the start of the first session after each general election is under:",
+                h: "आम चुनाव के बाद पहले सत्र और प्रत्येक वर्ष के प्रथम सत्र के आरंभ में राष्ट्रपति का विशेष अभिभाषण किस अनुच्छेद के अंतर्गत आता है?",
+                oEn: ["Article 86", "Article 87", "Article 88", "Article 85"],
+                oHi: ["अनुच्छेद 86", "अनुच्छेद 87", "अनुच्छेद 88", "अनुच्छेद 85"],
+                a: 1,
+                sE: "Article 87 of the Constitution provides for the Special Address by the President to both Houses assembled together.",
+                sH: "अनुच्छेद 87 राष्ट्रपति के दोनों सदनों में विशेष अभिभाषण का प्रावधान करता है।"
+            },
+            {
+                e: "Article _________ describes the procedure for a Joint Sitting of both Houses of Parliament in certain cases of legislative deadlock.",
+                h: "संविधान का कौन सा अनुच्छेद दोनों सदनों के बीच गतिरोध की स्थिति में संयुक्त बैठक (Joint Sitting) की प्रक्रिया बताता है?",
+                oEn: ["Article 115", "Article 104", "Article 108", "Article 94"],
+                oHi: ["अनुच्छेद 115", "अनुच्छेद 104", "अनुच्छेद 108", "अनुच्छेद 94"],
+                a: 2,
+                sE: "Article 108 provides the mechanism for a Joint Sitting of both Houses of Parliament summoned by the President.",
+                sH: "अनुच्छेद 108 में संसद के दोनों सदनों की संयुक्त बैठक का प्रावधान किया गया है।"
+            },
+            {
+                e: "What is the minimum age prescribed in the Constitution of India to become a member of the State Legislative Assembly (MLA)?",
+                h: "राज्य विधानसभा (Legislative Assembly) का सदस्य बनने के लिए संविधान में न्यूनतम आयु क्या निर्धारित है?",
+                oEn: ["No Minimum age is prescribed", "21 years", "25 years", "35 years"],
+                oHi: ["कोई न्यूनतम आयु नहीं", "21 वर्ष", "25 वर्ष (25 years)", "35 वर्ष"],
+                a: 2,
+                sE: "Under Article 173(b), a person must be not less than 25 years of age to be qualified for a seat in the Legislative Assembly.",
+                sH: "अनुच्छेद 173(b) के अनुसार विधानसभा सदस्य बनने के लिए न्यूनतम आयु 25 वर्ष होनी चाहिए (विधान परिषद के लिए 30 वर्ष)।"
+            },
+            {
+                e: "Which action attracts disqualification of an independent MP under the Tenth Schedule (Anti-Defection Law)?",
+                h: "10वीं अनुसूची (दलबदल कानून) के तहत किसी निर्दलीय सांसद को किस आधार पर अयोग्य घोषित किया जाता है?",
+                oEn: [
+                    "Supporting a coalition government",
+                    "Remaining neutral during debates",
+                    "Joining any political party after their election",
+                    "Voting differently from party whip"
+                ],
+                oHi: [
+                    "गठबंधन सरकार का समर्थन करना",
+                    "बहस के दौरान तटस्थ रहना",
+                    "चुनाव के बाद किसी राजनीतिक दल में शामिल होना",
+                    "पार्टी व्हिप के विपरीत मतदान करना"
+                ],
+                a: 2,
+                sE: "Under Paragraph 2(2) of the Tenth Schedule, an independent elected member becomes disqualified if they join any political party after election.",
+                sH: "10वीं अनुसूची के अनुसार यदि कोई निर्दलीय निर्वाचित सदस्य चुनाव जीतने के बाद किसी राजनीतिक दल में शामिल हो जाता है, तो उसकी सदस्यता रद्द हो जाती है।"
+            },
+            {
+                e: "Which of the following Parliamentary Committees is a permanent Financial Standing Committee?",
+                h: "निम्नलिखित में से कौन-सी स्थायी वित्तीय संसदीय समिति (Financial Committee) है?",
+                oEn: [
+                    "Committee on Welfare of SCs and STs",
+                    "Committee on Petitions",
+                    "Committee on Privileges",
+                    "Estimates Committee"
+                ],
+                oHi: [
+                    "अनुसूचित जाति/जनजाति कल्याण समिति",
+                    "याचिका समिति",
+                    "विशेषाधिकार समिति",
+                    "प्राक्कलन समिति (Estimates Committee)"
+                ],
+                a: 3,
+                sE: "The three Financial Committees of Parliament are the Public Accounts Committee, the Estimates Committee, and the Committee on Public Undertakings.",
+                sH: "प्राक्कलन समिति (Estimates Committee) संसद की तीन प्रमुख वित्तीय समितियों में से एक है।"
+            }
+        ];
+
+        const state = {
+            current: 0,
+            answers: new Array(QUESTIONS.length).fill(null),
+            locked: new Array(QUESTIONS.length).fill(false),
+            mode: 'test',
+            lang: 'en',
+            startTime: null,
+            timerInterval: null,
+            elapsed: 0
+        };
+
+        function $(id) { return document.getElementById(id); }
+
+        function toast(msg) {
+            const t = $('toast');
+            $('toastText').textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        function formatTime(s) {
+            const m = Math.floor(s / 60);
+            return String(m).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+        }
+
+        function startApp(mode) {
+            state.mode = mode;
+            $('startScreen').classList.add('hidden');
+            $('quizApp').classList.remove('hidden');
+            state.startTime = Date.now();
+            state.timerInterval = setInterval(() => {
+                state.elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+                $('timerText').textContent = formatTime(state.elapsed);
+            }, 1000);
+            renderQuestion();
+            buildPalette();
+        }
+
+        function toggleLang() {
+            state.lang = state.lang === 'en' ? 'hi' : 'en';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const i = state.current;
+            const q = QUESTIONS[i];
+            const isQuiz = state.mode === 'quiz';
+            const locked = state.locked[i];
+            const userAns = state.answers[i];
+            const qTxt = state.lang === 'en' ? q.e : q.h;
+            const opts = state.lang === 'en' ? q.oEn : q.oHi;
+
+            let optsHtml = '';
+            opts.forEach((opt, idx) => {
+                let cls = '', tag = '';
+                if (isQuiz && locked) {
+                    if (idx === q.a) {
+                        cls = 'correct';
+                        tag = '<span class="opt-tag">Correct</span>';
+                    }
+                    if (userAns === idx && idx !== q.a) {
+                        cls = 'wrong';
+                        tag = '<span class="opt-tag">Your Ans</span>';
+                    }
+                } else if (userAns === idx) {
+                    cls = 'selected';
+                }
+                optsHtml += `
+                    <div class="opt ${cls} ${locked ? 'locked' : ''}" onclick="selectOption(${idx})">
+                        <div class="opt-letter">${String.fromCharCode(65 + idx)}</div>
+                        <div class="opt-text">${opt}</div>
+                        ${tag}
+                    </div>
+                `;
+            });
+
+            const solTxt = state.lang === 'en' ? q.sE : q.sH;
+            let solHtml = (isQuiz && locked) ? `
+                <div class="sol-box">
+                    <div class="sol-head"><i class="fas fa-lightbulb"></i> Explanation</div>
+                    <div style="white-space: pre-line;">${solTxt}</div>
+                </div>
+            ` : '';
+
+            $('quizMain').innerHTML = `
+                <div class="q-card">
+                    <div class="q-top">
+                        <div class="q-num-badge">Question ${i + 1} of ${QUESTIONS.length}</div>
+                        <button class="lang-btn" onclick="toggleLang()">
+                            <i class="fas fa-language"></i> ${state.lang === 'en' ? 'Switch to हिन्दी' : 'Switch to English'}
+                        </button>
+                    </div>
+                    <div class="q-text">${qTxt}</div>
+                    <div class="opts">${optsHtml}</div>
+                    ${solHtml}
+                </div>
+            `;
+
+            $('prevBtn').disabled = i === 0;
+            $('nextLabel').textContent = i === QUESTIONS.length - 1 ? 'Finish' : 'Next';
+            updatePaletteGrid();
+        }
+
+        function selectOption(idx) {
+            if (state.mode === 'quiz' && state.locked[state.current]) return;
+            state.answers[state.current] = idx;
+            if (state.mode === 'quiz') {
+                state.locked[state.current] = true;
+                if (idx === QUESTIONS[state.current].a) {
+                    toast('Correct! 🎉');
+                } else {
+                    toast('Incorrect');
+                }
+            }
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (state.current > 0) {
+                state.current--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (state.current < QUESTIONS.length - 1) {
+                state.current++;
+                renderQuestion();
+            } else {
+                openSubmitModal();
+            }
+        }
+
+        function buildPalette() {
+            const grid = $('paletteGrid');
+            grid.innerHTML = '';
+            QUESTIONS.forEach((_, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'pal-btn';
+                btn.id = 'pal-' + i;
+                btn.textContent = i + 1;
+                btn.onclick = () => {
+                    state.current = i;
+                    closePalette();
+                    renderQuestion();
+                };
+                grid.appendChild(btn);
+            });
+            updatePaletteGrid();
+        }
+
+        function updatePaletteGrid() {
+            QUESTIONS.forEach((_, i) => {
+                const btn = $('pal-' + i);
+                if (!btn) return;
+                btn.className = 'pal-btn';
+                if (i === state.current) btn.classList.add('current');
+                if (state.answers[i] !== null) btn.classList.add('answered');
+            });
+        }
+
+        function openPalette() {
+            $('paletteDrawer').classList.add('open');
+            $('paletteOverlay').classList.add('open');
+        }
+
+        function closePalette() {
+            $('paletteDrawer').classList.remove('open');
+            $('paletteOverlay').classList.remove('open');
+        }
+
+        function openSubmitModal() {
+            const ans = state.answers.filter(a => a !== null).length;
+            $('modalAttempted').textContent = ans;
+            $('modalUnattempted').textContent = QUESTIONS.length - ans;
+            $('submitModal').classList.add('open');
+        }
+
+        function closeSubmitModal() {
+            $('submitModal').classList.remove('open');
+        }
+
+        function confirmSubmit() {
+            closeSubmitModal();
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            let correct = 0, wrong = 0;
+            state.answers.forEach((ans, i) => {
+                if (ans !== null) {
+                    if (ans === QUESTIONS[i].a) correct++;
+                    else wrong++;
+                }
+            });
+            $('resultsInner').innerHTML = `
+                <h2>Test Completed!</h2>
+                <p style="color:var(--text-muted);margin:8px 0;">Total Time: ${formatTime(state.elapsed)}</p>
+                <div class="res-score-card">
+                    <div class="res-score-val">${correct} / ${QUESTIONS.length}</div>
+                    <div>Score</div>
+                </div>
+                <div class="res-grid">
+                    <div class="res-item"><div class="res-item-val" style="color:var(--green)">${correct}</div><div>Correct</div></div>
+                    <div class="res-item"><div class="res-item-val" style="color:var(--red)">${wrong}</div><div>Wrong</div></div>
+                </div>
+                <button class="modal-btn confirm" onclick="location.reload()">Re-attempt</button>
+            `;
+            $('resultsScreen').classList.add('open');
+        }
+    </script>
+</body>
+</html>
